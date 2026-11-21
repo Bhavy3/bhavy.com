@@ -7,3 +7,68 @@
 .award,.award-seal{display:none!important}
 .contact[data-v-1f4dd8ca]>.name-zone[data-v-1f4dd8ca]{order:1}.contact[data-v-1f4dd8ca]>.footer-bar[data-v-1f4dd8ca]{order:2}.footer-bar[data-v-1f4dd8ca] .footer-col:nth-child(3){display:none}@media(min-width:1024px){.footer-bar[data-v-1f4dd8ca] .footer-col--right[data-v-1f4dd8ca]{grid-column:7 / 13}}.contact[data-v-1f4dd8ca]{padding-bottom:calc(var(--space-3xl) + 5rem)}
 @media(max-width:647px){.hero[data-v-26f141dd]{height:calc(100svh - 5rem);min-height:0;padding-bottom:clamp(4rem,12vh,6rem);grid-template:"location" auto "portrait" minmax(0,1fr) "text" auto / minmax(0,1fr)}.hero-portrait[data-v-26f141dd]{margin:0;min-height:clamp(9rem,29svh,17rem)}.hero-right[data-v-26f141dd]{padding-bottom:var(--space-m)}.hero-marquee[data-v-26f141dd]{bottom:0}.marquee[data-v-26f141dd]{font-size:clamp(2.75rem,10vw,4.5rem)}}@media(max-width:647px) and (max-height:680px){.hero[data-v-26f141dd]{height:auto;min-height:calc(100svh - 5rem);grid-template-rows:auto minmax(9rem,32svh) auto}.hero-right[data-v-26f141dd]{padding-bottom:clamp(4.5rem,14vh,6rem)}}
+
+/* Keep the product accordion usable on narrow touch screens. */
+@media (max-width: 647px) {
+  .as[data-v-e51b7dc8] {
+    --inset: 1rem;
+  }
+
+  .as-panels[data-v-e51b7dc8] {
+    flex-direction: column;
+    gap: .5rem;
+    min-height: 0;
+    margin-top: var(--space-l);
+  }
+
+  .as-panel[data-v-e51b7dc8] {
+    flex: 0 0 auto;
+    width: 100%;
+    height: 4.25rem;
+    border-radius: var(--radius-m);
+  }
+
+  .as-panel.is-open[data-v-e51b7dc8] {
+    flex-basis: min(28rem, 58svh);
+    height: min(28rem, 58svh);
+  }
+
+  .as-shut[data-v-e51b7dc8] {
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-start;
+    gap: var(--space-s);
+    padding: 0 var(--space-s);
+  }
+
+  .as-spine[data-v-e51b7dc8] {
+    writing-mode: horizontal-tb;
+    transform: none;
+    font-size: var(--step-1);
+    white-space: normal;
+  }
+
+  .as-open[data-v-e51b7dc8] {
+    width: 100%;
+    padding: var(--inset);
+    overflow-y: auto;
+  }
+
+  .as-name[data-v-e51b7dc8] {
+    font-size: clamp(1.5rem, 7vw, 2rem);
+    line-height: 1.05;
+  }
+
+  .as-body[data-v-e51b7dc8] {
+    grid-template-columns: minmax(0, 1fr);
+    grid-template-rows: auto auto;
+    align-content: start;
+    align-items: start;
+    gap: var(--space-s);
+    container-type: normal;
+  }
+
+  .apps-slot[data-v-e51b7dc8] {
+    width: min(100%, 17rem);
+  }
+}
