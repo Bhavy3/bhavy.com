@@ -1,0 +1,11 @@
+const fs = require('fs');
+const target = 'assets/index-CoQKB6gy.js';
+const checkpoint = '.freebuff/index-CoQKB6gy.js.labels-v1';
+fs.copyFileSync(target, checkpoint);
+let code = fs.readFileSync(target, 'utf8');
+const old = '"award.label":"Portfolio recognition"},$a={}';
+const add = '"award.label":"Portfolio recognition","availability.now":"Available for AI/ML work","nav.about":"About","nav.work":"Work","nav.contact":"Contact","dock.label":"Experience","dock.experience":"Choose an experience","building.stack":"Technology","chat.subAfter":"I will get back to you as soon as I can."},$a={}';
+if (!code.includes(old)) throw new Error('Label checkpoint anchor not found');
+code = code.replace(old, add);
+fs.writeFileSync(target, code);
+console.log('Completed the visible navigation and contact copy labels.');

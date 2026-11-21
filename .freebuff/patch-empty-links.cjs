@@ -1,0 +1,16 @@
+const fs = require('fs');
+const site = 'assets/SiteView-DWZhIdWn.js';
+const css = 'assets/SiteView-BPFIe396.css';
+fs.copyFileSync(site, '.freebuff/SiteView-DWZhIdWn.js.before-empty-links');
+fs.copyFileSync(css, '.freebuff/SiteView-BPFIe396.css.before-empty-links');
+let code = fs.readFileSync(site, 'utf8');
+const start = code.indexOf('ss(\'<a href="#" target="_blank" rel="noopener" class="bar-icon btn-icon link" aria-label="LinkedIn"');
+if (start < 0) throw new Error('LinkedIn placeholder anchor not found');
+const end = code.indexOf('</a><div class="bar-divider" data-v-9edacde4></div>\',2))', start);
+if (end < 0) throw new Error('LinkedIn placeholder end not found');
+code = code.slice(0, start) + 'ss(\'\',2))' + code.slice(end + '</a><div class="bar-divider" data-v-9edacde4></div>\',2))'.length);
+fs.writeFileSync(site, code);
+let styles = fs.readFileSync(css, 'utf8');
+styles += '\n/* Hide award UI when this copy has no award destinations configured. */\n.award-seal[href=""],.footer-col:has(.footer-award[href=""]){display:none!important}\n';
+fs.writeFileSync(css, styles);
+console.log('Removed the dead LinkedIn placeholder and empty award UI.');

@@ -1,0 +1,11 @@
+const fs = require('fs');
+const target = 'assets/index-CoQKB6gy.js';
+const original = '.freebuff/index-CoQKB6gy.js.original';
+fs.copyFileSync(target, original);
+let code = fs.readFileSync(target, 'utf8');
+const old = '"story.node.api.detail":"Core machine learning & AI systems"},$a={}';
+const addition = '"story.node.api.detail":"Core machine learning & AI systems","menu.home":"Bhavy Gajjar home","menu.open":"Open menu","menu.close":"Close menu","menu.talk":"Let us talk","menu.dialog":"Site navigation","menu.about":"About me","menu.about.note":"My background and story","menu.services":"What I do","menu.services.note":"How I work with data and AI","menu.work":"Selected work","menu.work.note":"Projects I have built","menu.building":"Now building","menu.building.note":"Current personal projects","menu.experience":"Experience","menu.experience.note":"My path since 2019","menu.off":"Off the clock","menu.off.note":"Interests beyond work","menu.contact":"Contact","menu.contact.note":"Start a conversation","nav.menu":"Menu","nav.label":"Main navigation","process.heading1":"From data to","process.heading2":"working","process.headingAccent":"products","experience.history":"Experience so far","experience.now":"Current role","consent.title":"Privacy choices","consent.text":"Choose whether to allow basic site analytics.","consent.accept":"Accept","consent.decline":"Decline","consent.open":"Privacy settings","consent.short":"Privacy choices","consent.privacy":"Privacy","consent.settings":"Cookie settings","award.label":"Portfolio recognition"},$a={}';
+if (!code.includes(old)) throw new Error('Translation insertion anchor not found');
+code = code.replace(old, addition);
+fs.writeFileSync(target, code);
+console.log('Added missing English interface labels.');

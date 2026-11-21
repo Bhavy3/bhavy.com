@@ -1,0 +1,10 @@
+const fs = require('fs');
+const target = 'assets/index-CoQKB6gy.js';
+fs.copyFileSync(target, '.freebuff/index-CoQKB6gy.js.process-v3');
+let code = fs.readFileSync(target, 'utf8');
+const old = 'Fa=()=>/^\\/pt(\\/|$)/.test(window.location.pathname)?"pt":"en"';
+const replacement = 'Fa=()=>"en"';
+if (!code.includes(old)) throw new Error('Locale fallback anchor not found');
+code = code.replace(old, replacement);
+fs.writeFileSync(target, code);
+console.log('Unsupported locale paths now fall back to the available English locale.');
