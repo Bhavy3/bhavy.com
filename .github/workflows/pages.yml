@@ -31,7 +31,10 @@ jobs:
           # This is a project site at /bhavy.com/ until a custom domain is set.
           # Relative asset URLs work at both that path and a custom domain root.
           find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) \
-            -exec sed -i 's|/assets/|./assets/|g; s|/og\.png|./og.png|g' {} +
+            -exec sed -i \
+              -e 's|/assets/|./assets/|g' \
+              -e 's|/og\.png|./og.png|g' \
+              -e 's|return"/"+e|return"./"+e|g' {} +
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
