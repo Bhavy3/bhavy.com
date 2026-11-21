@@ -30,11 +30,17 @@ jobs:
           touch _site/.nojekyll
           # This is a project site at /bhavy.com/ until a custom domain is set.
           # Relative asset URLs work at both that path and a custom domain root.
-          find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) \
+          find _site -type f \( -name '*.html' -o -name '*.js' \) \
             -exec sed -i \
               -e 's|/assets/|./assets/|g' \
               -e 's|/og\.png|./og.png|g' \
               -e 's|return"/"+e|return"./"+e|g' {} +
+          find _site/assets -type f -name '*.css' \
+            -exec sed -i 's|/assets/|./|g' {} +
+          sed -i \
+            -e "s|index-CoQKB6gy.js|index-CoQKB6gy.js?v=${GITHUB_SHA}|g" \
+            -e "s|index-YOZ1tUyI.css|index-YOZ1tUyI.css?v=${GITHUB_SHA}|g" \
+            _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
