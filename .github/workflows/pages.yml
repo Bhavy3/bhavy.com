@@ -26,10 +26,15 @@ jobs:
           mkdir -p _site
           cp index.html og.png _site/
           cp -R assets _site/assets
-          if [ -d cdn-cgi ]; then cp -R cdn-cgi _site/cdn-cgi; fi
           touch _site/.nojekyll
           # This is a project site at /bhavy.com/ until a custom domain is set.
           # Relative asset URLs work at both that path and a custom domain root.
+          #
+          # Do NOT append ?v=... cache-busting queries to the entry script or
+          # stylesheet links: the app fails to mount (Vue throws
+          # "Cannot read properties of null" during mount) when the entry
+          # module URL carries a query string. Asset filenames are already
+          # content-hashed, and Pages sends max-age=600, so it isn't needed.
           find _site -type f \( -name '*.html' -o -name '*.js' \) \
             -exec sed -i \
               -e 's|/assets/|./assets/|g' \
@@ -37,10 +42,6 @@ jobs:
               -e 's|return"/"+e|return"./"+e|g' {} +
           find _site/assets -type f -name '*.css' \
             -exec sed -i 's|/assets/|./|g' {} +
-          sed -i \
-            -e "s|index-CoQKB6gy.js|index-CoQKB6gy.js?v=${GITHUB_SHA}|g" \
-            -e "s|index-YOZ1tUyI.css|index-YOZ1tUyI.css?v=${GITHUB_SHA}|g" \
-            _site/index.html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
