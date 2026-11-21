@@ -61,6 +61,13 @@
             return await response.json()
           } catch { return null }
         }
+        // Only pass on a zone Intl actually accepts: an unknown zone string makes
+        // toLocaleTimeString/Intl.DateTimeFormat throw, which would kill the clock.
+        const safeZone = value => {
+          if (typeof value !== 'string' || !value.trim()) return undefined
+          try { new Intl.DateTimeFormat('en-GB', { timeZone: value }); return value } catch { return undefined }
+        }
+        const coordinates = value => typeof value === 'number' && Number.isFinite(value) ? value : undefined
         // Resolves to { country: "IN", name: "India", lat, lon, zone } or null.
         // Lazy: the entry screen and the 3D story never call it.
         let lookup = null
@@ -73,9 +80,9 @@
             return {
               country: ip.country_code,
               name: ip.country || countryName(ip.country_code),
-              lat: typeof ip.latitude === 'number' ? ip.latitude : undefined,
-              lon: typeof ip.longitude === 'number' ? ip.longitude : undefined,
-              zone: ip.timezone && ip.timezone.id,
+              lat: coordinates(ip.latitude),
+              lon: coordinates(ip.longitude),
+              zone: safeZone(ip.timezone && ip.timezone.id),
             }
           }
           if (own && own.country) return { ...own, name: own.name || countryName(own.country) }
