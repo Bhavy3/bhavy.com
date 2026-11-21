@@ -28,7 +28,10 @@ jobs:
           cp -R assets _site/assets
           if [ -d cdn-cgi ]; then cp -R cdn-cgi _site/cdn-cgi; fi
           touch _site/.nojekyll
-          # A custom domain is configured after DNS registration is merged.
+          # This is a project site at /bhavy.com/ until a custom domain is set.
+          # Relative asset URLs work at both that path and a custom domain root.
+          find _site -type f \( -name '*.html' -o -name '*.css' -o -name '*.js' \) \
+            -exec sed -i 's|/assets/|./assets/|g; s|/og\.png|./og.png|g' {} +
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
