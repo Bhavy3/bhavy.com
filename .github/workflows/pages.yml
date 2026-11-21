@@ -35,10 +35,11 @@ jobs:
           # "Cannot read properties of null" during mount) when the entry
           # module URL carries a query string. Asset filenames are already
           # content-hashed, and Pages sends max-age=600, so it isn't needed.
+          # (og:image and the canonical URL stay absolute in index.html, so no
+          # rewrite for /og.png here.)
           find _site -type f \( -name '*.html' -o -name '*.js' \) \
             -exec sed -i \
               -e 's|/assets/|./assets/|g' \
-              -e 's|/og\.png|./og.png|g' \
               -e 's|return"/"+e|return"./"+e|g' {} +
           find _site/assets -type f -name '*.css' \
             -exec sed -i 's|/assets/|./|g' {} +
